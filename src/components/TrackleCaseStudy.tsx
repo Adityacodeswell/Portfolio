@@ -1,12 +1,14 @@
 import { motion, useScroll, useTransform } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
-import { ArrowLeft, RefreshCw } from 'lucide-react';
+import { ArrowLeft, RefreshCw, ExternalLink } from 'lucide-react';
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
+import { useContent } from '../context/ContentContext';
 
 export default function TrackleCaseStudy() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { img, txt } = useContent();
   const { scrollYProgress } = useScroll({
     target: scrollRef,
     offset: ["start start", "end end"]
@@ -98,7 +100,7 @@ export default function TrackleCaseStudy() {
             {/* Right Visual: Cropped Logo/Palette */}
             <div className="relative group overflow-hidden border border-black/5 aspect-[4/5] bg-white shadow-2xl">
               <img 
-                src="/src/assets/images/regenerated_image_1778344061039.png" 
+                src={img('trackle_hero')} 
                 alt="Trackle Identity Analysis"
                 className="w-full h-full object-cover contrast-125 saturate-150 scale-150 translate-x-20 -translate-y-20 transition-transform duration-700"
               />
@@ -137,7 +139,7 @@ export default function TrackleCaseStudy() {
             {/* Inquiry 1 */}
             <div className="md:col-span-7 group relative overflow-hidden bg-black aspect-[16/10]">
               <img 
-                src="/src/assets/images/regenerated_image_1778344066159.png" 
+                src={img('trackle_research_01')} 
                 className="w-full h-full object-cover grayscale opacity-70 group-hover:opacity-100 transition-all duration-1000" 
                 alt="Contextual Inquiry" 
               />
@@ -153,7 +155,7 @@ export default function TrackleCaseStudy() {
             {/* Inquiry 2 */}
             <div className="md:col-span-5 group relative overflow-hidden border border-black/5 aspect-square">
               <img 
-                src="/src/assets/images/regenerated_image_1778344070862.png" 
+                src={img('trackle_research_02')} 
                 className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000" 
                 alt="Field Evidence" 
               />
@@ -197,7 +199,7 @@ export default function TrackleCaseStudy() {
                 className="relative z-10 p-4 bg-white/5 border border-white/10"
               >
                 <img 
-                  src="/src/assets/images/regenerated_image_1778344970037.png" 
+                  src={img('trackle_skeletal')} 
                   alt="Skeletal Mesh Analysis"
                   className="w-full h-auto grayscale brightness-110 contrast-125"
                 />
@@ -272,7 +274,7 @@ export default function TrackleCaseStudy() {
                }}
                className="aspect-[9/19] bg-gray-100 rounded-[3rem] overflow-hidden border-[8px] border-black shadow-xl"
              >
-               <img src="/src/assets/images/regenerated_image_1778344976693.jpg" className="w-full h-full object-cover grayscale brightness-90 translate-x-[-100%] scale-[2.5]" alt="Left Panel" />
+               <img src={img('trackle_screen_01')} className="w-full h-full object-cover grayscale brightness-90 translate-x-[-100%] scale-[2.5]" alt="Left Panel" />
              </motion.div>
 
              {/* Center Phone - SCALING EFFECT */}
@@ -282,7 +284,7 @@ export default function TrackleCaseStudy() {
                }}
                className="aspect-[9/19] bg-red-600 rounded-[3rem] overflow-hidden border-[10px] border-black shadow-2xl relative z-10"
              >
-               <img src="/src/assets/images/regenerated_image_1778344976693.jpg" className="w-full h-full object-cover scale-[1.05]" alt="Center Panel" />
+               <img src={img('trackle_screen_02')} className="w-full h-full object-cover scale-[1.05]" alt="Center Panel" />
                <div className="absolute top-12 left-1/2 -translate-x-1/2 bg-red-600 text-white font-mono text-[8px] px-3 py-1 font-black whitespace-nowrap shadow-lg">
                  SYSTEM_STATUS: ACTIVE_MODE_V3.1
                </div>
@@ -296,17 +298,25 @@ export default function TrackleCaseStudy() {
                }}
                className="aspect-[9/19] bg-gray-100 rounded-[3rem] overflow-hidden border-[8px] border-black shadow-xl"
              >
-               <img src="/src/assets/images/regenerated_image_1778344976693.jpg" className="w-full h-full object-cover grayscale brightness-90 translate-x-[100%] scale-[2.5]" alt="Right Panel" />
+               <img src={img('trackle_screen_03')} className="w-full h-full object-cover grayscale brightness-90 translate-x-[100%] scale-[2.5]" alt="Right Panel" />
              </motion.div>
           </div>
           
-          <div className="mt-48 text-center max-w-2xl mx-auto">
-             <p className="text-red-500 font-mono text-[10px] bg-red-50 inline-block px-4 py-2 font-black uppercase mb-6 border border-red-200">
+          <div className="mt-48 text-center max-w-2xl mx-auto flex flex-col items-center gap-8">
+             <p className="text-red-500 font-mono text-[10px] bg-red-50 inline-block px-4 py-2 font-black uppercase border border-red-200">
                Interface Visual Showcase: High-Density Tech Stats & Posture Heatmaps
              </p>
              <p className="text-xl text-black/60 font-sans tracking-tight leading-relaxed">
                Designed for extreme combat conditions. High-contrast typography and oversized triggers ensure usability even when the athlete is at peak exhaustion.
              </p>
+             <a 
+               href={txt('project_trackle_behance')} 
+               target="_blank" 
+               rel="noopener noreferrer"
+               className="flex items-center gap-3 font-mono text-xs font-black uppercase text-red-600 hover:text-black transition-colors"
+             >
+               View Full Documentation <ExternalLink size={14} />
+             </a>
           </div>
         </div>
       </section>

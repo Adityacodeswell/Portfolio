@@ -2,9 +2,11 @@ import { motion } from 'motion/react';
 import { useState } from 'react';
 import KineticBackground from './KineticBackground';
 import EnvironmentalShift from './EnvironmentalShift';
+import { useContent } from '../context/ContentContext';
 
 export default function Hero() {
   const [isMotionHovered, setIsMotionHovered] = useState(false);
+  const { txt } = useContent();
 
   const container = {
     hidden: { opacity: 0 },
@@ -79,21 +81,21 @@ export default function Hero() {
                 transition={{ duration: isMotionHovered ? 0.4 : 0 }}
                 className="font-mono text-[10px] uppercase tracking-[0.2em]"
               >
-                01 / STATUS: RESEARCHING
+                01 / STATUS: {txt('hero_status')}
               </motion.p>
               <motion.p 
                 animate={{ color: isMotionHovered ? 'rgba(255,255,255,0.4)' : 'rgba(26,26,27,0.4)' }}
                 transition={{ duration: isMotionHovered ? 0.4 : 0 }}
                 className="font-mono text-[10px] uppercase tracking-[0.2em]"
               >
-                02 / LOCATION: MUMBAI, IN
+                02 / LOCATION: {txt('hero_location')}
               </motion.p>
               <motion.p 
                 animate={{ color: isMotionHovered ? 'rgba(255,255,255,0.4)' : 'rgba(26,26,27,0.4)' }}
                 transition={{ duration: isMotionHovered ? 0.4 : 0 }}
                 className="font-mono text-[10px] uppercase tracking-[0.2em]"
               >
-                03 / FOCUS: Culture × Design × Technology
+                03 / FOCUS: {txt('hero_focus')}
               </motion.p>
             </motion.div>
             <motion.div variants={item} className="h-[2px] w-12 bg-accent" />
@@ -103,7 +105,7 @@ export default function Hero() {
               transition={{ duration: isMotionHovered ? 0.4 : 0 }}
               className="text-xl leading-snug max-w-sm font-medium"
             >
-              I try intersecting design, research and technology into meaningful experiences. My work explores how technology can compliment, and evolve human knowledge.
+              {txt('hero_bio')}
             </motion.p>
           </div>
         </div>

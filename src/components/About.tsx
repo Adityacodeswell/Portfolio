@@ -1,13 +1,10 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { useState } from 'react';
+import { useContent } from '../context/ContentContext';
 
 export default function About() {
   const [isHovered, setIsHovered] = useState(false);
-
-  const images = {
-    default: "/src/assets/images/regenerated_image_1778344958042.jpg",
-    hover: "/src/assets/images/regenerated_image_1778344958042.jpg"
-  };
+  const { img, txt } = useContent();
 
   return (
     <section id="about" className="px-6 py-20 md:px-12 md:py-40 bg-bg">
@@ -24,7 +21,7 @@ export default function About() {
                className={`aspect-[3/4] overflow-hidden relative group cursor-crosshair transition-all duration-700 ${isHovered ? 'grayscale-0 contrast-100' : 'grayscale contrast-125'}`}
              >
                 <motion.img 
-                  src={images.default} 
+                  src={img('about_portrait')} 
                   alt="Portrait"
                   animate={{ 
                     scale: isHovered ? 1.05 : 1,
@@ -42,8 +39,8 @@ export default function About() {
                </div>
              </motion.div>
              <div className="mt-8 flex flex-col gap-1">
-                <span className="font-display font-medium text-lg uppercase">NIFT Mumbai</span>
-                <span className="font-mono text-[10px] uppercase text-ink/40 tracking-widest italic">Current Focus: Design Research</span>
+                <span className="font-display font-medium text-lg uppercase">{txt('about_institution')}</span>
+                <span className="font-mono text-[10px] uppercase text-ink/40 tracking-widest italic">Current Focus: {txt('about_focus')}</span>
              </div>
           </div>
           

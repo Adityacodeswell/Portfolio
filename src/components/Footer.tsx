@@ -1,6 +1,9 @@
 import { motion } from 'motion/react';
+import { useContent } from '../context/ContentContext';
 
 export default function Footer() {
+  const { txt } = useContent();
+
   return (
     <footer id="contact" className="px-6 py-12 md:px-12 md:py-24 bg-ink text-bg">
       <div className="max-w-[1800px] mx-auto text-center">
@@ -11,23 +14,27 @@ export default function Footer() {
           transition={{ duration: 1 }}
           className="text-6xl md:text-[10vw] font-display font-medium tracking-tighter mb-16 md:mb-24 leading-[0.9] md:leading-[0.85]"
         >
-          Let's Build the <span className="italic block font-sans font-light">Intersection.</span>
+          {txt('footer_tagline').split('\n').map((line, i) => (
+            <span key={i} className={i === 1 ? "italic block font-sans font-light" : "block"}>
+              {line}
+            </span>
+          ))}
         </motion.h2>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 items-end text-left">
           <div className="space-y-4">
              <span className="font-mono text-[10px] uppercase tracking-widest text-bg/40 italic">Social</span>
              <div className="flex flex-col gap-2">
-               {['LinkedIn', 'Instagram', 'Behance'].map(link => (
-                 <a key={link} href="#" className="text-xl hover:italic transition-all duration-300 w-fit">{link}</a>
-               ))}
+               <a href={txt('social_linkedin')} target="_blank" rel="noopener noreferrer" className="text-xl hover:italic transition-all duration-300 w-fit">LinkedIn</a>
+               <a href={txt('social_instagram')} target="_blank" rel="noopener noreferrer" className="text-xl hover:italic transition-all duration-300 w-fit">Instagram</a>
+               <a href={txt('social_behance')} target="_blank" rel="noopener noreferrer" className="text-xl hover:italic transition-all duration-300 w-fit">Behance</a>
              </div>
           </div>
 
           <div className="md:col-span-2 space-y-4">
              <span className="font-mono text-[10px] uppercase tracking-widest text-bg/40 italic">Inquiries</span>
-             <a href="mailto:aditya.kumar1@nift.ac.in" className="text-3xl md:text-5xl lg:text-5xl font-display hover:italic truncate block transition-all duration-300 break-all leading-none">
-              aditya.kumar1@nift.ac.in
+             <a href={`mailto:${txt('contact_email')}`} className="text-3xl md:text-5xl lg:text-5xl font-display hover:italic truncate block transition-all duration-300 break-all leading-none">
+              {txt('contact_email')}
              </a>
           </div>
 

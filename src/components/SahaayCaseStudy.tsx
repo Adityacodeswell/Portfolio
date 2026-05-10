@@ -2,9 +2,11 @@ import { motion, useScroll, useTransform, useInView } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, Target, Users, Layout, ShieldAlert, Heart, Activity, ChevronRight, Moon, Sun, MessageSquare, ClipboardList, Briefcase, Share2, Lightbulb, ShieldCheck } from 'lucide-react';
+import { useContent } from '../context/ContentContext';
 
 export default function SahaayCaseStudy() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { img, txt } = useContent();
   const { scrollYProgress } = useScroll({
     target: scrollRef,
     offset: ["start start", "end end"]
@@ -62,7 +64,7 @@ export default function SahaayCaseStudy() {
         >
           {/* Background: wide-angle image of facility playground */}
           <img 
-            src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=2000" 
+            src={img('sahaay_hero')} 
             alt="St. Jude Facility"
             className="w-full h-full object-cover grayscale brightness-75 contrast-110"
           />

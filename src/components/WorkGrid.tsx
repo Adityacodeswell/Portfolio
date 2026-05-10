@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'motion/react';
 import { usePageTransition } from './PageTransition';
 import { projects } from '../data/projects';
+import { useContent } from '../context/ContentContext';
 
 interface CardProps {
   key?: string | number;
@@ -14,6 +15,10 @@ function Card({ project, idx }: CardProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const { triggerTransition } = usePageTransition();
+  const { img } = useContent();
+
+  const projectImgId = `project_${project.slug.replace(/-/g, '_')}_thumb`;
+  const displayImage = img(projectImgId) || project.image;
 
   // Magnetic badge coordinates
   const badgeX = useMotionValue(0);
@@ -82,7 +87,7 @@ function Card({ project, idx }: CardProps) {
             scale: isHovered ? 1.05 : 1,
           }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          src={project.image} 
+          src={displayImage} 
           alt={project.title}
           className={`w-full h-full object-cover transition-all duration-700 ${isHovered ? 'grayscale-0' : 'grayscale'}`}
         />

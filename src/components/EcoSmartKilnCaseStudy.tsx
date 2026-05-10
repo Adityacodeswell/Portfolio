@@ -1,12 +1,14 @@
 import { motion, useScroll, useTransform, useInView } from 'motion/react';
 import { useParams, Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, Target, Zap, Activity, ShieldCheck, Cpu, Database, ChevronRight, Wind, Thermometer, ShieldOff } from 'lucide-react';
+import { ArrowLeft, Target, Zap, Activity, ShieldCheck, Cpu, Database, ChevronRight, Wind, Thermometer, ShieldOff, ExternalLink } from 'lucide-react';
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
+import { useContent } from '../context/ContentContext';
 
 export default function EcoSmartKilnCaseStudy() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { img, txt } = useContent();
   const { scrollYProgress } = useScroll({
     target: scrollRef,
     offset: ["start start", "end end"]
@@ -44,7 +46,7 @@ export default function EcoSmartKilnCaseStudy() {
           {/* Minimalist 3D Render Placeholder */}
           <div className="relative w-full h-full max-w-4xl max-h-[70%] bg-gray-200 rounded-3xl overflow-hidden shadow-2xl group">
              <img 
-               src="https://images.unsplash.com/photo-1590644365607-1c5a519a9a37?q=80&w=1600" 
+               src={img('kiln_hero')} 
                alt="Eco-Smart Kiln Render"
                className="w-full h-full object-cover grayscale mix-blend-multiply opacity-80"
              />
@@ -369,7 +371,7 @@ export default function EcoSmartKilnCaseStudy() {
       {/* Behance Integration */}
       <section className="py-24 px-6 bg-bg flex justify-center">
         <motion.a 
-          href="https://www.behance.net"
+          href={txt('project_kiln_behance')}
           target="_blank"
           rel="noopener noreferrer"
           className="group relative w-full max-w-4xl py-24 bg-[#585CE5] flex items-center justify-center overflow-hidden"
