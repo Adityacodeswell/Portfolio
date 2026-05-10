@@ -27,7 +27,7 @@ export const projects: Project[] = [
     title: 'TRACKLE',
     category: 'Community-led Research / AI / Motion Tracking',
     year: '2025',
-    image: '/src/assets/images/regenerated_image_1778405244621.png',
+    image: '/assets/images/regenerated_image_1778405244621.png',
     video: 'https://cdn.pixabay.com/video/2024/05/13/211751-942621743_tiny.mp4',
     metadata: {
       role: 'Lead Design Researcher',
@@ -52,7 +52,7 @@ export const projects: Project[] = [
     title: 'ECO-SMART KILN',
     category: 'Design for human and environment',
     year: '2025',
-    image: '/src/assets/images/regenerated_image_1778344061039.png',
+    image: '/assets/images/regenerated_image_1778344061039.png',
     video: 'https://cdn.pixabay.com/video/2022/10/21/135905-763428133_tiny.mp4',
     metadata: {
       role: 'System Designer',
@@ -76,7 +76,7 @@ export const projects: Project[] = [
     title: 'Subsense',
     category: 'Interface-UI/UX',
     year: '2026',
-    image: '/src/assets/images/regenerated_image_1778405257189.png',
+    image: '/assets/images/regenerated_image_1778405257189.png',
     video: 'https://cdn.pixabay.com/video/2021/11/14/95671-645856161_tiny.mp4',
     metadata: {
       role: 'UI/UX Designer',
@@ -100,7 +100,7 @@ export const projects: Project[] = [
     title: 'SAHAAY',
     category: 'Service Design',
     year: '2026',
-    image: '/src/assets/images/regenerated_image_1778405268648.png',
+    image: '/assets/images/regenerated_image_1778405268648.png',
     video: 'https://cdn.pixabay.com/video/2018/06/07/16664-275135689_tiny.mp4',
     metadata: {
       role: 'Service Designer',
