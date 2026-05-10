@@ -1,14 +1,14 @@
 import { motion, useScroll, useTransform } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
-import { ArrowLeft, RefreshCw, ExternalLink } from 'lucide-react';
+import { ArrowLeft, RefreshCw, ExternalLink, ChevronRight } from 'lucide-react';
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
-import { useContent } from '../context/ContentContext';
+import { PORTFOLIO_DATA } from '../config/content';
 
 export default function TrackleCaseStudy() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { img, txt } = useContent();
+  const { images, text } = PORTFOLIO_DATA;
   const { scrollYProgress } = useScroll({
     target: scrollRef,
     offset: ["start start", "end end"]
@@ -100,9 +100,9 @@ export default function TrackleCaseStudy() {
             {/* Right Visual: Cropped Logo/Palette */}
             <div className="relative group overflow-hidden border border-black/5 aspect-[4/5] bg-white shadow-2xl">
               <img 
-                src={img('trackle_hero')} 
+                src={images.trackle_hero} 
                 alt="Trackle Identity Analysis"
-                className="w-full h-full object-cover contrast-125 saturate-150 scale-150 translate-x-20 -translate-y-20 transition-transform duration-700"
+                className="w-full h-full object-cover contrast-125 saturate-150 transition-transform duration-700"
               />
               <div className="absolute top-8 right-8 flex flex-col items-end gap-2">
                 <span className="bg-red-600 text-white font-mono text-[9px] px-3 py-1 font-black uppercase">CORE_ASSET: T_LOGO</span>
@@ -139,7 +139,7 @@ export default function TrackleCaseStudy() {
             {/* Inquiry 1 */}
             <div className="md:col-span-7 group relative overflow-hidden bg-black aspect-[16/10]">
               <img 
-                src={img('trackle_research_01')} 
+                src={images.trackle_research_01} 
                 className="w-full h-full object-cover grayscale opacity-70 group-hover:opacity-100 transition-all duration-1000" 
                 alt="Contextual Inquiry" 
               />
@@ -155,7 +155,7 @@ export default function TrackleCaseStudy() {
             {/* Inquiry 2 */}
             <div className="md:col-span-5 group relative overflow-hidden border border-black/5 aspect-square">
               <img 
-                src={img('trackle_research_02')} 
+                src={images.trackle_research_02} 
                 className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000" 
                 alt="Field Evidence" 
               />
@@ -199,7 +199,7 @@ export default function TrackleCaseStudy() {
                 className="relative z-10 p-4 bg-white/5 border border-white/10"
               >
                 <img 
-                  src={img('trackle_skeletal')} 
+                  src={images.trackle_skeletal} 
                   alt="Skeletal Mesh Analysis"
                   className="w-full h-auto grayscale brightness-110 contrast-125"
                 />
@@ -254,6 +254,42 @@ export default function TrackleCaseStudy() {
         </div>
       </section>
 
+      {/* ACT 4.5 // DESIGN_LANGUAGE */}
+      <section className="relative z-20 bg-white py-32 md:py-64 px-6 overflow-hidden">
+        <div className="max-w-[1400px] mx-auto text-left">
+          <div className="mb-24 space-y-6">
+            <span className="text-red-600 font-mono text-xs font-black tracking-[0.5em] block uppercase">4.5 // DESIGN_LANGUAGE</span>
+            <h2 className="text-[10vw] font-display font-black leading-[0.8] text-[#1A1A1B] uppercase">
+              SYSTEMS.
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 gap-12">
+            <motion.div 
+               initial={{ opacity: 0, y: 50 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               transition={{ duration: 1 }}
+               className="relative group overflow-hidden border border-black/5 bg-white shadow-[0_40px_100px_-20px_rgba(0,0,0,0.1)]"
+            >
+              <img 
+                src={images.trackle_design_language} 
+                alt="Trackle Design Systems and Brand Identity"
+                className="w-full h-auto"
+              />
+              <div className="absolute top-8 left-8 bg-red-600 text-white font-mono text-[9px] px-3 py-1 font-black uppercase">
+                IDENTITY_DOC: TRACKLE_SYSTEM_V2
+              </div>
+              <div className="absolute bottom-12 right-12 max-w-sm p-8 bg-black/90 backdrop-blur-xl border-r-4 border-red-600 text-left hidden md:block">
+                 <p className="font-mono text-[9px] text-red-500 font-black uppercase tracking-widest mb-4 block">Visual Grammar:</p>
+                 <p className="text-white/60 text-sm font-sans tracking-tight leading-relaxed uppercase">
+                   The design system leverages high-contrast utilitarian aesthetics. A palette dominated by 'Trackle Red' and 'Midnight Black' evokes the intensity of competition, while wide-tracking typography ensures legibility during rapid motion feedback.
+                 </p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* ACT 5 // 04 INTERFACE */}
       <section ref={act5Ref} className="relative z-20 bg-white py-32 md:py-64 px-6 border-y border-black/5">
         <div className="max-w-[1400px] mx-auto text-center mb-32">
@@ -274,7 +310,7 @@ export default function TrackleCaseStudy() {
                }}
                className="aspect-[9/19] bg-gray-100 rounded-[3rem] overflow-hidden border-[8px] border-black shadow-xl"
              >
-               <img src={img('trackle_screen_01')} className="w-full h-full object-cover grayscale brightness-90 translate-x-[-100%] scale-[2.5]" alt="Left Panel" />
+               <img src={images.trackle_screen_01} className="w-full h-full object-cover grayscale brightness-90" alt="Left Panel" />
              </motion.div>
 
              {/* Center Phone - SCALING EFFECT */}
@@ -284,7 +320,7 @@ export default function TrackleCaseStudy() {
                }}
                className="aspect-[9/19] bg-red-600 rounded-[3rem] overflow-hidden border-[10px] border-black shadow-2xl relative z-10"
              >
-               <img src={img('trackle_screen_02')} className="w-full h-full object-cover scale-[1.05]" alt="Center Panel" />
+               <img src={images.trackle_screen_02} className="w-full h-full object-cover scale-[1.05]" alt="Center Panel" />
                <div className="absolute top-12 left-1/2 -translate-x-1/2 bg-red-600 text-white font-mono text-[8px] px-3 py-1 font-black whitespace-nowrap shadow-lg">
                  SYSTEM_STATUS: ACTIVE_MODE_V3.1
                </div>
@@ -298,7 +334,7 @@ export default function TrackleCaseStudy() {
                }}
                className="aspect-[9/19] bg-gray-100 rounded-[3rem] overflow-hidden border-[8px] border-black shadow-xl"
              >
-               <img src={img('trackle_screen_03')} className="w-full h-full object-cover grayscale brightness-90 translate-x-[100%] scale-[2.5]" alt="Right Panel" />
+               <img src={images.trackle_screen_03} className="w-full h-full object-cover grayscale brightness-90" alt="Right Panel" />
              </motion.div>
           </div>
           
@@ -309,14 +345,20 @@ export default function TrackleCaseStudy() {
              <p className="text-xl text-black/60 font-sans tracking-tight leading-relaxed">
                Designed for extreme combat conditions. High-contrast typography and oversized triggers ensure usability even when the athlete is at peak exhaustion.
              </p>
-             <a 
-               href={txt('project_trackle_behance')} 
+             <motion.a 
+               href={text.project_trackle_behance} 
                target="_blank" 
                rel="noopener noreferrer"
-               className="flex items-center gap-3 font-mono text-xs font-black uppercase text-red-600 hover:text-black transition-colors"
+               whileHover={{ scale: 1.02 }}
+               whileTap={{ scale: 0.98 }}
+               className="group relative flex items-center gap-6 px-12 py-6 bg-red-600 text-white rounded-full overflow-hidden transition-all duration-500 hover:shadow-[0_20px_50px_rgba(220,38,38,0.3)]"
              >
-               View Full Documentation <ExternalLink size={14} />
-             </a>
+                <div className="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+                <span className="relative z-10 font-display font-black uppercase tracking-[0.2em] text-sm">Full Case Study</span>
+                <div className="relative z-10 w-10 h-10 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-red-600 transition-colors">
+                  <ExternalLink size={18} />
+                </div>
+             </motion.a>
           </div>
         </div>
       </section>
@@ -342,19 +384,20 @@ export default function TrackleCaseStudy() {
               </div>
            </div>
 
-           {/* System Exit */}
-           <div className="flex flex-col items-center">
-              <Link 
-                to="/" 
-                className="group relative overflow-hidden bg-red-600 px-12 py-8 flex items-center gap-6 transition-all duration-500 hover:bg-white"
-              >
-                 <RefreshCw size={24} className="text-white group-hover:text-red-600 transition-colors animate-spin-slow" />
-                 <span className="text-white group-hover:text-red-600 font-display font-black text-2xl tracking-[0.2em] uppercase transition-colors">REBOOT SYSTEM</span>
-                 <ArrowLeft size={18} className="text-white group-hover:text-red-600 transition-colors" />
+           {/* Next Project Navigation */}
+           <div className="mt-32 pt-32 border-t border-white/10 w-full flex justify-between items-center">
+              <Link to="/" className="group flex items-center gap-4">
+                 <div className="w-12 h-12 bg-white text-[#1A1A1B] flex items-center justify-center rounded-full group-hover:bg-red-600 group-hover:text-white transition-all duration-500">
+                   <ArrowLeft size={18} />
+                 </div>
+                 <span className="font-display font-bold uppercase tracking-widest text-sm text-white group-hover:text-red-600 transition-colors">Back to Terminal</span>
               </Link>
-              <div className="mt-8 text-center">
-                <p className="text-white/20 font-mono text-[8px] uppercase tracking-[0.5em]">ARCHIVE_PATH: PORTFOLIO_HERO_ROOT</p>
-                <p className="text-red-500 font-mono text-[10px] mt-2 font-black uppercase">SYSTEM_STABLE // NO ERRORS_FOUND</p>
+              
+              <div className="flex flex-col items-end">
+                 <span className="font-mono text-[10px] text-white/40 uppercase mb-2">Next Research</span>
+                 <Link to="/project/eco-smart-kiln" className="text-2xl md:text-5xl font-display font-black uppercase hover:text-red-500 transition-colors flex items-center gap-6 text-white group">
+                   Eco-Smart Kiln <ChevronRight size={32} className="text-red-600 group-hover:translate-x-2 transition-transform" />
+                 </Link>
               </div>
            </div>
         </div>

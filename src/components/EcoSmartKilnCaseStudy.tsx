@@ -4,11 +4,11 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, Target, Zap, Activity, ShieldCheck, Cpu, Database, ChevronRight, Wind, Thermometer, ShieldOff, ExternalLink } from 'lucide-react';
 import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
-import { useContent } from '../context/ContentContext';
+import { PORTFOLIO_DATA } from '../config/content';
 
 export default function EcoSmartKilnCaseStudy() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { img, txt } = useContent();
+  const { images, text } = PORTFOLIO_DATA;
   const { scrollYProgress } = useScroll({
     target: scrollRef,
     offset: ["start start", "end end"]
@@ -43,15 +43,7 @@ export default function EcoSmartKilnCaseStudy() {
           transition={{ duration: 1.5, ease: "easeOut" }}
           className="absolute inset-0 flex items-center justify-center p-12"
         >
-          {/* Minimalist 3D Render Placeholder */}
-          <div className="relative w-full h-full max-w-4xl max-h-[70%] bg-gray-200 rounded-3xl overflow-hidden shadow-2xl group">
-             <img 
-               src={img('kiln_hero')} 
-               alt="Eco-Smart Kiln Render"
-               className="w-full h-full object-cover grayscale mix-blend-multiply opacity-80"
-             />
-             <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent" />
-          </div>
+          {/* 3D Render Placeholder Removed */}
         </motion.div>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-10 pointer-events-none">
@@ -103,7 +95,7 @@ export default function EcoSmartKilnCaseStudy() {
         <div className="min-h-screen relative flex items-center justify-center py-32 px-6">
           <div className="absolute inset-0 z-0">
              <img 
-               src="https://images.unsplash.com/photo-1621252179027-94459d278660?q=80&w=2000" 
+               src={images.kiln_context} 
                className="w-full h-full object-cover grayscale brightness-[0.2] contrast-125"
                alt="Kiln Environment"
              />
@@ -342,6 +334,44 @@ export default function EcoSmartKilnCaseStudy() {
         </div>
       </section>
 
+      {/* 4.5 DESIGN LANGUAGE SHEET */}
+      <section className="py-32 md:py-56 px-6 bg-[#F8F8F8]">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="mb-24 flex flex-col gap-4">
+            <span className="text-[#585CE5] font-mono text-xs font-bold tracking-[0.5em] uppercase">04.5 // DESIGN_SYSTEM</span>
+            <h2 className="text-5xl md:text-8xl font-display font-medium tracking-tightest text-ink uppercase leading-none">
+              Visual <br/> Grammar
+            </h2>
+          </div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2 }}
+            className="relative group w-full bg-white shadow-2xl border border-black/5 overflow-hidden"
+          >
+            <img 
+              src={images.kiln_design_system} 
+              alt="KilnMaster Pro Design Language Sheet"
+              className="w-full h-auto"
+            />
+            <div className="absolute top-8 right-8 bg-[#585CE5] text-white font-mono text-[9px] px-3 py-1 font-black uppercase">
+              DOC_REF: K_SYSTEM_01
+            </div>
+          </motion.div>
+
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-12 text-black/50 font-sans">
+            <p className="text-xl leading-relaxed">
+              The "KilnMaster Pro" interface is built on a foundation of industrial utility and high-visibility feedback. The system prioritizes rapid comprehension through a strict hierarchy of thermal data and state indicators.
+            </p>
+            <div className="border-l-2 border-[#585CE5] pl-8 flex flex-col justify-center">
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#585CE5] mb-2">Technical Specification:</span>
+              <p className="uppercase font-display font-bold text-ink">Scaleable Thermal Simulation Matrix v1.0</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 5. Social Impact Footer */}
       <section className="bg-[#585CE5] text-white py-32 md:py-56 px-6">
         <div className="max-w-[1400px] mx-auto">
@@ -369,31 +399,42 @@ export default function EcoSmartKilnCaseStudy() {
       </section>
 
       {/* Behance Integration */}
-      <section className="py-24 px-6 bg-bg flex justify-center">
+      <section className="py-24 px-6 bg-white flex justify-center">
         <motion.a 
-          href={txt('project_kiln_behance')}
+          href={text.project_kiln_behance}
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative w-full max-w-4xl py-24 bg-[#585CE5] flex items-center justify-center overflow-hidden"
+          className="group relative w-full max-w-[1400px] py-32 bg-[#585CE5] flex flex-col items-center justify-center overflow-hidden rounded-3xl"
           whileHover="hover"
         >
           {/* Liquid expansion effect */}
           <motion.div 
             variants={{
               hover: { 
-                scale: 2,
-                borderRadius: "30%",
-                rotate: 15
+                scale: 1.5,
+                opacity: 1
               }
             }}
-            transition={{ duration: 1.2, ease: "circOut" }}
-            className="absolute inset-0 bg-indigo-400/20 translate-y-full rounded-full"
+            initial={{ scale: 0, opacity: 0 }}
+            transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+            className="absolute inset-0 bg-indigo-400/30 rounded-full pointer-events-none"
           />
-          <span className="relative z-10 text-white font-display text-3xl md:text-5xl font-black uppercase tracking-tightest group-hover:italic transition-all duration-500">
-            Read the full research on Behance.
-          </span>
-          <div className="absolute bottom-6 right-8 text-white/50 font-mono text-[10px] tracking-widest">
-            EXTERNAL_ARCHIVE_LINK_O2
+          
+          <div className="relative z-10 flex flex-col items-center text-center px-6">
+            <span className="font-mono text-[10px] text-white/60 uppercase tracking-[0.4em] mb-6 block">In-Depth Case Study</span>
+            <h2 className="text-white font-display text-3xl md:text-6xl font-black uppercase tracking-tightest leading-tight">
+              View on <br className="md:hidden" /> <span className="group-hover:italic transition-all duration-500">Behance</span>
+            </h2>
+            <div className="mt-8 flex items-center gap-4 text-white p-4 border border-white/20 rounded-full group-hover:bg-white group-hover:text-[#585CE5] transition-all duration-500">
+               <span className="font-mono text-xs font-bold uppercase tracking-widest pl-4">Launch Site</span>
+               <div className="w-10 h-10 bg-white/10 flex items-center justify-center rounded-full group-hover:bg-transparent">
+                 <ExternalLink size={20} />
+               </div>
+            </div>
+          </div>
+
+          <div className="absolute bottom-8 right-12 text-white/30 font-mono text-[10px] tracking-[0.3em] uppercase">
+            Archive_Reference_K.01
           </div>
         </motion.a>
       </section>

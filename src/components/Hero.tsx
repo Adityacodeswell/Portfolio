@@ -2,11 +2,11 @@ import { motion } from 'motion/react';
 import { useState } from 'react';
 import KineticBackground from './KineticBackground';
 import EnvironmentalShift from './EnvironmentalShift';
-import { useContent } from '../context/ContentContext';
+import { PORTFOLIO_DATA } from '../config/content';
 
 export default function Hero() {
   const [isMotionHovered, setIsMotionHovered] = useState(false);
-  const { txt } = useContent();
+  const { text } = PORTFOLIO_DATA;
 
   const container = {
     hidden: { opacity: 0 },
@@ -81,21 +81,21 @@ export default function Hero() {
                 transition={{ duration: isMotionHovered ? 0.4 : 0 }}
                 className="font-mono text-[10px] uppercase tracking-[0.2em]"
               >
-                01 / STATUS: {txt('hero_status')}
+                01 / STATUS: {text.hero_status}
               </motion.p>
               <motion.p 
                 animate={{ color: isMotionHovered ? 'rgba(255,255,255,0.4)' : 'rgba(26,26,27,0.4)' }}
                 transition={{ duration: isMotionHovered ? 0.4 : 0 }}
                 className="font-mono text-[10px] uppercase tracking-[0.2em]"
               >
-                02 / LOCATION: {txt('hero_location')}
+                02 / LOCATION: {text.hero_location}
               </motion.p>
               <motion.p 
                 animate={{ color: isMotionHovered ? 'rgba(255,255,255,0.4)' : 'rgba(26,26,27,0.4)' }}
                 transition={{ duration: isMotionHovered ? 0.4 : 0 }}
                 className="font-mono text-[10px] uppercase tracking-[0.2em]"
               >
-                03 / FOCUS: {txt('hero_focus')}
+                03 / FOCUS: {text.hero_focus}
               </motion.p>
             </motion.div>
             <motion.div variants={item} className="h-[2px] w-12 bg-accent" />
@@ -105,7 +105,7 @@ export default function Hero() {
               transition={{ duration: isMotionHovered ? 0.4 : 0 }}
               className="text-xl leading-snug max-w-sm font-medium"
             >
-              {txt('hero_bio')}
+              {text.hero_bio}
             </motion.p>
           </div>
         </div>

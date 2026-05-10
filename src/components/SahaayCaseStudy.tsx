@@ -1,12 +1,12 @@
 import { motion, useScroll, useTransform, useInView } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, Target, Users, Layout, ShieldAlert, Heart, Activity, ChevronRight, Moon, Sun, MessageSquare, ClipboardList, Briefcase, Share2, Lightbulb, ShieldCheck } from 'lucide-react';
-import { useContent } from '../context/ContentContext';
+import { ArrowLeft, Target, Users, Layout, ShieldAlert, Heart, Activity, ChevronRight, Moon, Sun, MessageSquare, ClipboardList, Briefcase, Share2, Lightbulb, ShieldCheck, ExternalLink } from 'lucide-react';
+import { PORTFOLIO_DATA } from '../config/content';
 
 export default function SahaayCaseStudy() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { img, txt } = useContent();
+  const { images, text } = PORTFOLIO_DATA;
   const { scrollYProgress } = useScroll({
     target: scrollRef,
     offset: ["start start", "end end"]
@@ -62,12 +62,7 @@ export default function SahaayCaseStudy() {
           transition={{ duration: 2, ease: "circOut" }}
           className="absolute inset-0"
         >
-          {/* Background: wide-angle image of facility playground */}
-          <img 
-            src={img('sahaay_hero')} 
-            alt="St. Jude Facility"
-            className="w-full h-full object-cover grayscale brightness-75 contrast-110"
-          />
+    
         </motion.div>
         <div className="absolute inset-0 bg-[#2E3192]/40 mix-blend-multiply" />
         
@@ -419,56 +414,46 @@ export default function SahaayCaseStudy() {
               </div>
             ))}
           </div>
+
+          <div className="mt-32 flex justify-center">
+            <motion.a 
+               href={text.project_sahaay_behance} 
+               target="_blank" 
+               rel="noopener noreferrer"
+               whileHover={{ scale: 1.02 }}
+               whileTap={{ scale: 0.98 }}
+               className="group relative flex items-center gap-6 px-12 py-6 bg-[#2E3192] text-white rounded-full overflow-hidden transition-all duration-500 hover:shadow-[0_20px_50px_rgba(46,49,146,0.2)]"
+             >
+                <div className="absolute inset-0 bg-[#F58220] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]" />
+                <span className="relative z-10 font-display font-black uppercase tracking-[0.2em] text-sm group-hover:text-white">Full Research on Behance</span>
+                <div className="relative z-10 w-10 h-10 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-[#2E3192]/50 transition-colors">
+                  <ExternalLink size={18} />
+                </div>
+             </motion.a>
+          </div>
         </div>
       </section>
 
-      {/* 08. Future Scope & Reboot */}
-      <section className="bg-[#4A773C] text-white py-32 md:py-56 px-6 relative overflow-hidden">
-        <div className="max-w-4xl mx-auto text-center space-y-16 relative z-10">
-          <Lightbulb className="mx-auto text-white/40" size={60} />
-          <h2 className="text-4xl md:text-6xl font-display font-medium uppercase tracking-tightest">Future Scope // <br/> Scalability</h2>
-          <p className="text-xl md:text-2xl font-sans font-light leading-relaxed text-indigo-50/80">
-            Beyond St. Jude India, the SAHAAY logic is built for scalability. We envision integration with hospital data systems for <span className="font-bold text-white uppercase italic">predictive diagnostics</span> and real-time triage in other high-risk pediatric contexts.
-          </p>
-          
-          <div className="pt-24">
-            <Link 
-              to="/"
-              className="px-12 py-5 bg-[#F58220] hover:bg-white hover:text-[#F58220] transition-all duration-500 font-display font-black uppercase tracking-widest text-sm inline-block"
-            >
-              REBOOT SYSTEM
-            </Link>
-          </div>
-        </div>
-        
-        {/* Abstract pattern background */}
-        <div className="absolute inset-x-0 bottom-0 top-1/2 opacity-10 pointer-events-none">
-           <div className="w-full h-full flex flex-wrap">
-              {[...Array(100)].map((_, i) => (
-                <div key={i} className="w-10 h-10 border border-white/20 transform rotate-45" />
-              ))}
+      {/* 08. Next Project Navigation */}
+      <section className="bg-white py-12 md:py-24 px-6">
+        <div className="max-w-[1400px] mx-auto">
+           <div className="pt-12 border-t border-[#2E3192]/10 w-full flex justify-between items-center">
+              <Link to="/" className="group flex items-center gap-4">
+                 <div className="w-12 h-12 bg-[#2E3192] text-white flex items-center justify-center rounded-full group-hover:bg-[#F58220] transition-all duration-500">
+                   <ArrowLeft size={18} />
+                 </div>
+                 <span className="font-display font-bold uppercase tracking-widest text-sm text-[#2E3192] group-hover:text-[#F58220] transition-colors">Back to Terminal</span>
+              </Link>
+              
+              <div className="flex flex-col items-end">
+                 <span className="font-mono text-[10px] text-[#2E3192]/40 uppercase mb-2">Next Research</span>
+                 <Link to="/project/eco-smart-kiln" className="text-2xl md:text-5xl font-display font-bold uppercase hover:text-[#F58220] transition-colors flex items-center gap-6 text-[#2E3192] group">
+                   Eco-Smart Kiln <ChevronRight size={32} className="text-[#F58220] group-hover:translate-x-2 transition-transform" />
+                 </Link>
+              </div>
            </div>
         </div>
       </section>
-
-      {/* Navigation Footer */}
-      <footer className="py-24 px-6 border-t border-[#2E3192]/10 bg-[#FDFBF7]">
-        <div className="max-w-[1400px] mx-auto flex justify-between items-center">
-          <Link to="/" className="group flex items-center gap-4">
-             <div className="w-12 h-12 bg-[#2E3192] text-white flex items-center justify-center rounded-full group-hover:bg-[#F58220] transition-colors">
-               <ArrowLeft size={18} />
-             </div>
-             <span className="font-display font-bold uppercase tracking-widest text-sm text-[#2E3192]">Back to Portfolio</span>
-          </Link>
-          
-          <div className="flex flex-col items-end">
-             <span className="font-mono text-[10px] text-[#2E3192]/40 uppercase mb-2">Adjacent Research</span>
-             <Link to="/project/subsense" className="text-2xl md:text-4xl font-display font-bold uppercase hover:text-[#F58220] transition-colors flex items-center gap-4 text-[#2E3192]">
-               Subsense <ChevronRight size={24} className="text-[#F58220]" />
-             </Link>
-          </div>
-        </div>
-      </footer>
     </motion.div>
   );
 }

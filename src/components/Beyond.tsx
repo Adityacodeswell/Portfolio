@@ -1,18 +1,17 @@
 import { motion, useScroll, useTransform, useMotionTemplate } from 'motion/react';
 import { useRef } from 'react';
-import { useContent } from '../context/ContentContext';
+import { PORTFOLIO_DATA } from '../config/content';
 
 export default function Beyond() {
   const containerRef = useRef<HTMLElement>(null);
   const targetRef = useRef<HTMLDivElement>(null);
-  const { img } = useContent();
+  const { images } = PORTFOLIO_DATA;
 
   const interests = [
-    { id: '01', title: 'Wrestling', url: img('beyond_01_wrestling'), alt: "Wrestling Culture" },
-    { id: '02', title: 'Training', url: img('beyond_02_training'), alt: "Gym Environment" },
-    { id: '03', title: 'Exhibitions', url: img('beyond_03_exhibitions'), alt: "Art Exhibition" },
-    { id: '04', title: 'Storytelling', url: img('beyond_04_storytelling'), alt: "Exhibition Detail" },
-    { id: '05', title: 'Observation', url: img('beyond_05_observation'), alt: "Physical Training" }
+    { id: '01', title: 'Wrestling', url: images.beyond_01_wrestling, alt: "Wrestling Culture" },
+    { id: '02', title: 'Training', url: images.beyond_02_training, alt: "Gym Environment" },
+    { id: '03', title: 'Selfgrowth', url: images.beyond_03_exhibitions, alt: "Art Exhibition" },
+    { id: '04', title: 'Exhibitions', url: images.beyond_04_storytelling, alt: "Exhibition Detail" }
   ];
 
   const { scrollYProgress } = useScroll({
