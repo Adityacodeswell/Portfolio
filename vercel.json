@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/((?!api|assets|_next|static|favicon.ico).*|.*\\.js|.*\\.css|.*\\.png|.*\\.jpg|.*\\.svg|.*\\.json|.*\\.woff|.*\\.woff2)",
+      "destination": "/index.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

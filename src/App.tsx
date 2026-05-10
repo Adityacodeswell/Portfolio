@@ -39,6 +39,7 @@ function Landing() {
 }
 
 export default function App() {
+  // Trigger comment: force environment variable update and fix cloudinary name
   const location = useLocation();
   const isAdminPage = location.pathname === '/admin';
 
