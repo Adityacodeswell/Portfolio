@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, useMotionTemplate } from 'motion/react';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { PORTFOLIO_DATA } from '../config/content';
 
 export default function Beyond() {
@@ -13,6 +13,18 @@ export default function Beyond() {
     { id: '03', title: 'Selfgrowth', url: images.beyond_03_exhibitions, alt: "Art Exhibition" },
     { id: '04', title: 'Exhibitions', url: images.beyond_04_storytelling, alt: "Exhibition Detail" }
   ];
+
+  // RESPONSIVE FIX: Track if viewport is mobile (< 768px) to disable sticky scrolling translate effects and enable native touch-scroll swiping
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -64,26 +76,33 @@ export default function Beyond() {
       </div>
 
       {/* 2. Sticky Horizontal Gallery Section */}
-      <div className="h-[150vh] relative">
-        <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+      {/* RESPONSIVE FIX: Make height auto on mobile and 150vh on desktop to keep the correct viewport size for horizontal scrolls */}
+      <div className="h-auto md:h-[150vh] relative">
+        {/* RESPONSIVE FIX: Disable top-0 and height-screen on mobile to layout the cards naturally inside the document tree and permit horizontal swipe scrolling */}
+        <div className="relative md:sticky md:top-0 h-auto md:h-screen flex flex-col justify-center overflow-x-auto md:overflow-hidden pt-12 md:pt-20">
           {/* Film Grain Texture Overlay */}
           <div className="absolute inset-0 opacity-[0.06] pointer-events-none mix-blend-overlay z-50"
                style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }} />
 
-          <div className="w-full relative overflow-visible z-10 pt-12 md:pt-20">
+          {/* RESPONSIVE FIX: Turn into a horizontal swiping container on mobile using overflow-x-auto, scrollbar-none, and snapping properties */}
+          <div 
+            className="w-full relative z-10 pb-12 md:pb-0 scrollbar-none snap-x snap-mandatory overflow-x-auto md:overflow-visible"
+            style={isMobile ? { scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' } : undefined}
+          >
             <motion.div 
               ref={targetRef}
-              style={{ x }}
-              className="flex gap-16 px-[15vw] items-center"
+              style={isMobile ? undefined : { x }}
+              className="flex gap-8 md:gap-16 px-6 md:px-[15vw] items-center"
             >
               {interests.map((item, idx) => (
-                <InterestCard key={idx} item={item} index={idx} total={interests.length} scrollYProgress={scrollYProgress} />
+                <InterestCard key={idx} item={item} index={idx} total={interests.length} scrollYProgress={scrollYProgress} isMobile={isMobile} />
               ))}
             </motion.div>
           </div>
 
           {/* 3. Concluding Typographic Layer */}
-          <div className="absolute bottom-[10%] left-full w-max pointer-events-none z-0">
+          {/* RESPONSIVE FIX: Hide the horizontal scroll-transform text on mobile to avoid overflow and clipping bugs */}
+          <div className="absolute bottom-[10%] left-full w-max pointer-events-none z-0 hidden md:block">
             <motion.div
               style={{ x: useTransform(scrollYProgress, [0.3, 1], ["-125%", "-100%"]) }}
               className="whitespace-nowrap"
@@ -117,9 +136,10 @@ interface InterestCardProps {
   index: number;
   total: number;
   scrollYProgress: any;
+  isMobile: boolean;
 }
 
-function InterestCard({ item, index, total, scrollYProgress }: InterestCardProps) {
+function InterestCard({ item, index, total, scrollYProgress, isMobile }: InterestCardProps) {
   const step = 1 / total;
   const cardCenter = (index + 0.5) / total;
   
@@ -135,10 +155,15 @@ function InterestCard({ item, index, total, scrollYProgress }: InterestCardProps
   
   const filter = useMotionTemplate`grayscale(${grayscale}%) brightness(${brightness})`;
 
+  // RESPONSIVE FIX: Fallback to simple static scale and filter styles on mobile to prevent scrolling state animation mismatches
+  const cardScale = isMobile ? 1.0 : scale;
+  const cardFilter = isMobile ? 'none' : filter;
+
   return (
     <motion.div 
-      style={{ scale, filter }}
-      className="flex-shrink-0 w-[300px] md:w-[500px] aspect-[3/4] relative rounded-[24px] overflow-hidden group cursor-none"
+      style={{ scale: cardScale, filter: cardFilter }}
+      // RESPONSIVE FIX: Add snap-center and responsive card width (w-[85vw]) on mobile viewports
+      className="flex-shrink-0 w-[85vw] sm:w-[500px] aspect-[3/4] relative rounded-[24px] overflow-hidden group cursor-none snap-center"
       onMouseEnter={() => {
         window.dispatchEvent(new CustomEvent('updateCursorText', { detail: { text: 'SCROLL' } }));
       }}
