@@ -10,7 +10,8 @@ export default function About() {
     <section id="about" className="px-6 py-20 md:px-12 md:py-40 bg-bg">
       <div className="max-w-[1800px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
-          <div className="lg:col-span-4 self-start sticky top-32">
+          {/* RESPONSIVE FIX: Only apply sticky positioning on desktop (lg) so that the portrait and text scroll naturally on mobile and do not hide the content below */}
+          <div className="lg:col-span-4 self-start lg:sticky lg:top-32">
              <motion.div
                initial={{ opacity: 0, scale: 0.95 }}
                whileInView={{ opacity: 1, scale: 1 }}
