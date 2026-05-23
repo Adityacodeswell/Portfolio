@@ -59,6 +59,7 @@ function Card({ project, idx }: CardProps) {
   };
 
   const handleClick = (e: React.MouseEvent) => {
+    // Get absolute center of the click or the explore button
     const x = e.clientX;
     const y = e.clientY;
     triggerTransition(`/project/${project.slug}`, x, y);
@@ -76,6 +77,7 @@ function Card({ project, idx }: CardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 1.2, ease: [0.33, 1, 0.68, 1] }}
+      // RESPONSIVE FIX: Change staggered grid card offset from md:mt-48 to lg:mt-48 so it only activates on desktop where double-column spacing is balanced and doesn't cause whitespace imbalance on tablets
       className={`group cursor-none relative flex flex-col ${idx % 2 === 1 ? 'lg:mt-48' : ''}`}
     >
       <div className="aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-ink mb-10 relative">
@@ -135,7 +137,7 @@ function Card({ project, idx }: CardProps) {
         </motion.div>
       </div>
       
-      // RESPONSIVE FIX: Prevent card title and category from clipping on narrow mobile screens by removing pr-12 on mobile and applying sm:pr-12
+      {/* RESPONSIVE FIX: Prevent card title and category from clipping on narrow mobile screens by removing pr-12 on mobile and applying sm:pr-12 */}
       <div className="flex flex-col gap-4 relative z-10 pr-0 sm:pr-12">
         <div className="flex justify-between items-baseline border-b border-ink/5 pb-4">
           <h3 className="text-3xl md:text-4xl font-display font-medium tracking-tighter uppercase group-hover:text-accent transition-colors duration-300 flex items-center gap-4">
