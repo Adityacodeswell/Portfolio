@@ -66,6 +66,7 @@ function Card({ project, idx }: CardProps) {
   };
 
   return (
+    {/* RESPONSIVE FIX: Change staggered grid card offset from md:mt-48 to lg:mt-48 so it only activates on desktop where double-column spacing is balanced and doesn't cause whitespace imbalance on tablets */}
     <motion.div
       ref={containerRef}
       style={{ rotate }}
@@ -77,7 +78,6 @@ function Card({ project, idx }: CardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 1.2, ease: [0.33, 1, 0.68, 1] }}
-      // RESPONSIVE FIX: Change staggered grid card offset from md:mt-48 to lg:mt-48 so it only activates on desktop where double-column spacing is balanced and doesn't cause whitespace imbalance on tablets
       className={`group cursor-none relative flex flex-col ${idx % 2 === 1 ? 'lg:mt-48' : ''}`}
     >
       <div className="aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-ink mb-10 relative">
