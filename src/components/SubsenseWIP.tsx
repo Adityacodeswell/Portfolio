@@ -23,7 +23,8 @@ export default function SubsenseProject() {
         </div>
 
         {/* Global Nav Elements */}
-        <div className="absolute top-12 left-12 flex items-center gap-6">
+        {/* RESPONSIVE FIX: Adjust padding bounds from absolute top-12 left-12 to top-6 left-6 md:top-12 md:left-12 to avoid viewport overflow on small screens */}
+        <div className="absolute top-6 left-6 md:top-12 md:left-12 flex items-center gap-6">
           <Link to="/" className="w-10 h-10 bg-white border border-gray-200 rounded-full flex items-center justify-center hover:bg-[#582C9F] hover:text-white transition-all shadow-sm">
             <ArrowLeft size={16} />
           </Link>
@@ -35,10 +36,11 @@ export default function SubsenseProject() {
 
         {/* "Incomplete" Dashboard Elements (Floating Wireframes) */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          {/* RESPONSIVE FIX: Add 'hidden md:block' to decorative wireframes to prevent sideways layout scrolling on mobile devices */}
           <motion.div 
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-1/4 -left-20 w-80 h-48 bg-white border border-gray-200 rounded-2xl shadow-xl opacity-40 p-6 space-y-4"
+            className="absolute top-1/4 -left-20 w-80 h-48 bg-white border border-gray-200 rounded-2xl shadow-xl opacity-40 p-6 space-y-4 hidden md:block"
           >
             <div className="h-4 w-1/2 bg-gray-100 rounded" />
             <div className="h-20 w-full bg-gray-50 rounded border border-dashed border-gray-200 flex items-center justify-center">
@@ -46,10 +48,11 @@ export default function SubsenseProject() {
             </div>
           </motion.div>
 
+          {/* RESPONSIVE FIX: Add 'hidden md:block' to decorative wireframes to prevent sideways layout scrolling on mobile devices */}
           <motion.div 
             animate={{ y: [0, 15, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-            className="absolute bottom-1/4 -right-20 w-96 h-64 bg-[#582C9F] rounded-3xl shadow-2xl opacity-10 p-8"
+            className="absolute bottom-1/4 -right-20 w-96 h-64 bg-[#582C9F] rounded-3xl shadow-2xl opacity-10 p-8 hidden md:block"
           />
         </div>
 
@@ -98,7 +101,8 @@ export default function SubsenseProject() {
           </motion.div>
         </div>
 
-        <div className="absolute bottom-12 left-12 right-12 flex justify-between items-end border-t border-gray-100 pt-8 opacity-40">
+        {/* RESPONSIVE FIX: Reposition bottom layout bounds (absolute bottom-6 left-6 right-6 md:bottom-12 md:left-12 md:right-12) to avoid clipping issues */}
+        <div className="absolute bottom-6 left-6 right-6 md:bottom-12 md:left-12 md:right-12 flex justify-between items-end border-t border-gray-100 pt-8 opacity-40">
           <div className="text-[10px] font-mono leading-relaxed">
             <span className="block">[SYSTEM_STATUS: NOMINAL]</span>
             <span className="block">[UI_RENDERER: ACTIVE]</span>
@@ -203,13 +207,14 @@ export default function SubsenseProject() {
               Explore the deployed architecture. Interact with real-time spend intelligence models.
             </p>
             
+            {/* RESPONSIVE FIX: Decrease button padding to px-8 md:px-12 py-5 md:py-6 to maintain better spatial proportions on narrow widths */}
             <motion.a 
               href="https://subsence-kappa.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group relative inline-flex items-center gap-4 bg-[#D9F99D] text-[#1A1A1A] px-12 py-6 rounded-full font-black uppercase tracking-widest text-xs overflow-hidden shadow-xl"
+              className="group relative inline-flex items-center gap-4 bg-[#D9F99D] text-[#1A1A1A] px-8 md:px-12 py-5 md:py-6 rounded-full font-black uppercase tracking-widest text-xs overflow-hidden shadow-xl"
             >
               <div className="absolute inset-0 bg-[#FFF] translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
               <span className="relative z-10 flex items-center gap-3">
@@ -234,6 +239,7 @@ export default function SubsenseProject() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* RESPONSIVE FIX: Change padding container elements from p-10 to p-6 md:p-10 inside standard feature columns */}
             {[
               { 
                 title: "Spend Intelligence", 
@@ -251,7 +257,7 @@ export default function SubsenseProject() {
                 icon: <Zap className="text-[#582C9F]" />
               }
             ].map((feature, i) => (
-              <div key={i} className="p-10 bg-[#F8F9FB] border border-gray-100 hover:border-[#D9F99D] hover:bg-white transition-all group rounded-2xl shadow-sm">
+              <div key={i} className="p-6 md:p-10 bg-[#F8F9FB] border border-gray-100 hover:border-[#D9F99D] hover:bg-white transition-all group rounded-2xl shadow-sm">
                 <div className="mb-8 w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center transition-colors group-hover:bg-[#582C9F] group-hover:text-white">
                   {feature.icon}
                 </div>
@@ -266,7 +272,8 @@ export default function SubsenseProject() {
       {/* 4.5. Component Anatomy Section */}
       <section className="py-32 md:py-56 px-6 bg-[#F8F9FB] overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+          {/* RESPONSIVE FIX: Optimize grid layouts and decrease gap scale to gap-12 lg:gap-24 on tablet grids */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
             <div className="space-y-8">
               <span className="text-[#582C9F] font-mono text-[10px] font-bold tracking-[0.4em] uppercase">02.5 // ATOMIC_DESIGN</span>
               <h2 className="text-4xl md:text-7xl font-display font-black uppercase leading-tight">Component <br/> Anatomy</h2>
@@ -341,7 +348,8 @@ export default function SubsenseProject() {
           
           <div className="flex flex-col items-center md:items-end">
             <span className="font-mono text-[10px] text-gray-400 uppercase mb-4 text-right tracking-[0.2em]">Next Service Case</span>
-            <Link to="/project/sahaay" className="text-3xl md:text-6xl font-display font-black uppercase hover:text-[#582C9F] transition-all flex items-center gap-6 group">
+            {/* RESPONSIVE FIX: Prevent line overflow on small screen widths by adding text-2xl sm:text-3xl md:text-6xl and flex-wrap properties to the layout container */}
+            <Link to="/project/sahaay" className="text-2xl sm:text-3xl md:text-6xl flex flex-wrap items-center gap-6 font-display font-black uppercase hover:text-[#582C9F] transition-all group">
               SAHAAY 
               <div className="w-10 h-10 border border-gray-200 rounded-full flex items-center justify-center group-hover:bg-[#D9F99D] group-hover:border-[#D9F99D] transition-colors">
                 <ExternalLink size={16} className="text-gray-300 group-hover:text-[#1A1A1A]" />
