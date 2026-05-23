@@ -89,7 +89,8 @@ export default function SahaayCaseStudy() {
 
         {/* Metadata Bar */}
         <div className="absolute bottom-0 left-0 w-full bg-[#F58220] px-8 py-5 z-40">
-          <div className="max-w-[1800px] mx-auto flex flex-wrap justify-between items-center gap-8 text-white">
+           {/* RESPONSIVE FIX: Convert metadata bar to grid layout grid-cols-2 md:flex md:flex-wrap with dynamic gaps (gap-4 md:gap-8) to stop word truncation on screens under 400px */}
+           <div className="max-w-[1800px] mx-auto grid grid-cols-2 md:flex md:flex-wrap justify-between items-center gap-4 md:gap-8 text-white">
              <div className="flex flex-col">
                <span className="font-mono text-[9px] uppercase font-bold opacity-70">ROLE</span>
                <span className="font-sans font-bold uppercase tracking-tighter text-xs">Service Designer & Researcher</span>
@@ -111,7 +112,8 @@ export default function SahaayCaseStudy() {
       </header>
 
       {/* Intro Narration */}
-      <section className="py-32 px-6">
+      {/* RESPONSIVE FIX: Scale padding on intro narration (py-16 md:py-32) to prevent excessive whitespace below hero on mobile */}
+      <section className="py-16 md:py-32 px-6">
         <div className="max-w-4xl mx-auto space-y-12">
           <h2 className="text-4xl md:text-6xl font-display font-medium tracking-tight uppercase leading-none">
             From Fragmented Care <br/><span className="text-[#4A773C] italic font-light">to Continuous Support.</span>
@@ -125,10 +127,12 @@ export default function SahaayCaseStudy() {
       {/* 01. Problem Discovery: The Night Gap */}
       <section className="bg-[#2E3192] text-white py-32 md:py-56 px-6 overflow-hidden">
         <div className="max-w-[1400px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center mb-32">
+          {/* RESPONSIVE FIX: Change gap to gap-12 lg:gap-24 on single columns to keep layout elements cleanly cohesive */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center mb-32">
             <div className="space-y-12">
               <span className="text-[#F58220] font-mono text-xs font-bold tracking-[0.5em] uppercase">01 // THE NIGHT GAP</span>
-              <h3 className="text-5xl md:text-8xl font-display font-medium tracking-tightest uppercase leading-none">
+              {/* RESPONSIVE FIX: Introduce an intermediate sm step size (text-4xl sm:text-5xl md:text-8xl) to prevent horizontal layout overflow */}
+              <h3 className="text-4xl sm:text-5xl md:text-8xl font-display font-medium tracking-tightest uppercase leading-none">
                 Visibility <br/> Dissolves <br/> at 6:00 PM.
               </h3>
               <p className="text-white/60 text-lg leading-relaxed font-sans max-w-lg">
@@ -138,7 +142,8 @@ export default function SahaayCaseStudy() {
             
             {/* Day vs Night Split Visual */}
             <div className="relative aspect-square md:aspect-[4/5] bg-white/5 rounded-3xl overflow-hidden border border-white/10 flex">
-               <div className="w-1/2 h-full bg-[#4A773C]/20 border-r border-white/5 p-8 flex flex-col justify-between">
+               {/* RESPONSIVE FIX: Reduce split panel paddings to p-4 md:p-8 to maximize structural density for smaller viewports */}
+               <div className="w-1/2 h-full bg-[#4A773C]/20 border-r border-white/5 p-4 md:p-8 flex flex-col justify-between">
                   <div className="flex items-center gap-3">
                     <Sun className="text-white/40" size={20} />
                     <span className="font-mono text-[10px] font-bold tracking-widest uppercase text-white/40">Staff Hours</span>
@@ -150,7 +155,8 @@ export default function SahaayCaseStudy() {
                   </div>
                   <span className="font-mono text-[9px] text-[#4A773C] font-bold">SYSTEMATIC_CARE</span>
                </div>
-               <div className="w-1/2 h-full bg-black/40 p-8 flex flex-col justify-between">
+               {/* RESPONSIVE FIX: Reduce split panel paddings to p-4 md:p-8 to maximize structural density for smaller viewports */}
+               <div className="w-1/2 h-full bg-black/40 p-4 md:p-8 flex flex-col justify-between">
                   <div className="flex items-center gap-3">
                     <Moon className="text-white/40" size={20} />
                     <span className="font-mono text-[10px] font-bold tracking-widest uppercase text-white/40">The Gap</span>
@@ -170,9 +176,11 @@ export default function SahaayCaseStudy() {
             </div>
           </div>
 
-          <div className="max-w-4xl mx-auto text-center space-y-12 py-24 border-y border-white/10">
+          {/* RESPONSIVE FIX: Switch vertical spacing padding to py-12 md:py-24 on mobile and update size styles */}
+          <div className="max-w-4xl mx-auto text-center space-y-12 py-12 md:py-24 border-y border-white/10">
             <p className="font-mono text-xs uppercase text-[#F58220] font-black tracking-widest">Core Inquiry</p>
-            <h4 className="text-3xl md:text-5xl font-display font-black uppercase leading-tight">
+            {/* RESPONSIVE FIX: Decrease HMW question font size to text-xl sm:text-2xl md:text-5xl inside mobile blocks */}
+            <h4 className="text-xl sm:text-2xl md:text-5xl font-display font-black uppercase leading-tight">
               "How might we enable staff to ensure consistent, timely and reliable care without increasing manual workload or dependency on informal coordination?"
             </h4>
           </div>
