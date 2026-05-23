@@ -20,7 +20,6 @@ function Card({ project, idx }: CardProps) {
   const projectImgId = `project_${project.slug.replace(/-/g, '_')}_thumb` as keyof typeof images;
   const displayImage = images[projectImgId] || project.image;
 
-  // Magnetic badge coordinates
   const badgeX = useMotionValue(0);
   const badgeY = useMotionValue(0);
   const springX = useSpring(badgeX, { damping: 20, stiffness: 150 });
@@ -59,7 +58,6 @@ function Card({ project, idx }: CardProps) {
   };
 
   const handleClick = (e: React.MouseEvent) => {
-    // Get absolute center of the click or the explore button
     const x = e.clientX;
     const y = e.clientY;
     triggerTransition(`/project/${project.slug}`, x, y);
@@ -77,11 +75,9 @@ function Card({ project, idx }: CardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 1.2, ease: [0.33, 1, 0.68, 1] }}
-      // RESPONSIVE FIX: Change staggered grid card offset from md:mt-48 to lg:mt-48 so it only activates on desktop where double-column spacing is balanced and doesn't cause whitespace imbalance on tablets
       className={`group cursor-none relative flex flex-col ${idx % 2 === 1 ? 'lg:mt-48' : ''}`}
     >
       <div className="aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-ink mb-10 relative">
-        {/* Static Image Base */}
         <motion.img 
           animate={{ 
             opacity: isHovered ? 0.4 : 1, 
@@ -93,7 +89,6 @@ function Card({ project, idx }: CardProps) {
           className={`w-full h-full object-cover transition-all duration-700 ${isHovered ? 'grayscale-0' : 'grayscale'}`}
         />
 
-        {/* Hover Video Overlay */}
         <video 
           ref={videoRef}
           key={project.video}
@@ -122,7 +117,6 @@ function Card({ project, idx }: CardProps) {
         
         <div className="absolute top-6 left-6 font-mono text-[11px] text-white/50 z-10">{project.id}</div>
         
-        {/* Cuberto Magnetic Explore Badge */}
         <motion.div 
           style={{ x: springX, y: springY }}
           className="absolute inset-0 pointer-events-none z-20 flex items-center justify-center"
@@ -137,7 +131,6 @@ function Card({ project, idx }: CardProps) {
         </motion.div>
       </div>
       
-      {/* RESPONSIVE FIX: Prevent card title and category from clipping on narrow mobile screens by removing pr-12 on mobile and applying sm:pr-12 */}
       <div className="flex flex-col gap-4 relative z-10 pr-0 sm:pr-12">
         <div className="flex justify-between items-baseline border-b border-ink/5 pb-4">
           <h3 className="text-3xl md:text-4xl font-display font-medium tracking-tighter uppercase group-hover:text-accent transition-colors duration-300 flex items-center gap-4">
@@ -162,7 +155,6 @@ export default function WorkGrid() {
   return (
     <section id="work" className="px-6 py-24 md:px-12 md:py-48 bg-white overflow-hidden">
       <div className="max-w-[1700px] mx-auto">
-        {/* RESPONSIVE FIX: Scale header bottom margin smoothly instead of using oversized mobile defaults (changed from mb-32 md:mb-56 to mb-16 md:mb-32 xl:mb-56) */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-32 xl:mb-56">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -175,7 +167,6 @@ export default function WorkGrid() {
                <div className="w-2 h-2 bg-accent rounded-full" />
                <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-accent font-bold">Field Research Evidence</span>
              </div>
-            {/* RESPONSIVE FIX: Add intermediate h2 font sizes sm:text-7xl and lg:text-9xl to smooth layout text scaling */}
             <h2 className="text-6xl sm:text-7xl lg:text-9xl font-display font-medium tracking-tighter uppercase leading-[0.8]">
               System <br/><span className="italic font-light text-ink/20">Outputs_</span>
             </h2>
@@ -195,7 +186,6 @@ export default function WorkGrid() {
           </motion.div>
         </div>
 
-        {/* RESPONSIVE FIX: Smooth gap-y trajectory scaling to avoid aggressive whitespace jumps on medium, large, and extra-large breakpoints */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24 md:gap-y-40 xl:gap-y-64 items-start">
           {projects.map((project, idx) => (
             <Card key={project.id} project={project} idx={idx} />
