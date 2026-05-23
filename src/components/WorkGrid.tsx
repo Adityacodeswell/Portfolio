@@ -59,7 +59,6 @@ function Card({ project, idx }: CardProps) {
   };
 
   const handleClick = (e: React.MouseEvent) => {
-    // Get absolute center of the click or the explore button
     const x = e.clientX;
     const y = e.clientY;
     triggerTransition(`/project/${project.slug}`, x, y);
@@ -77,7 +76,6 @@ function Card({ project, idx }: CardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 1.2, ease: [0.33, 1, 0.68, 1] }}
-      // RESPONSIVE FIX: Change staggered grid card offset from md:mt-48 to lg:mt-48 so it only activates on desktop where double-column spacing is balanced and doesn't cause whitespace imbalance on tablets
       className={`group cursor-none relative flex flex-col ${idx % 2 === 1 ? 'lg:mt-48' : ''}`}
     >
       <div className="aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-ink mb-10 relative">
