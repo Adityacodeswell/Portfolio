@@ -4,34 +4,26 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Link } from 'react-router-dom';
 import { AnimatePresence } from 'motion/react';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
 import WorkGrid from './components/WorkGrid';
-import About from './components/About';
-import Beyond from './components/Beyond';
-import Archive from './components/Archive';
+import WhyHireMe from './components/WhyHireMe';
+import EducationAchievements from './components/EducationAchievements';
+import BeyondDesignStage from './components/BeyondDesignStage';
 import Footer from './components/Footer';
 import SmoothScroll from './components/SmoothScroll';
-import CustomCursor from './components/CustomCursor';
-import CaseStudy from './components/CaseStudy';
-import TrackleCaseStudy from './components/TrackleCaseStudy';
-import EcoSmartKilnCaseStudy from './components/EcoSmartKilnCaseStudy';
-import SahaayCaseStudy from './components/SahaayCaseStudy';
-import SubsenseWIP from './components/SubsenseWIP';
 import { TransitionProvider } from './components/PageTransition';
-import ArchiveBridge from './components/ArchiveBridge';
 
 function Landing() {
   return (
     <>
       <Hero />
       <WorkGrid />
-      <About />
-      <Archive />
-      <ArchiveBridge />
-      <Beyond />
+      <WhyHireMe />
+      <EducationAchievements />
+      <BeyondDesignStage />
     </>
   );
 }
@@ -43,17 +35,22 @@ export default function App() {
     <TransitionProvider>
       <SmoothScroll>
         <main className="min-h-screen">
-          <CustomCursor />
           <Navigation />
           
           <AnimatePresence mode="wait">
             <Routes location={location}>
               <Route path="/" element={<Landing />} />
-              <Route path="/project/trackle" element={<TrackleCaseStudy />} />
-              <Route path="/project/eco-smart-kiln" element={<EcoSmartKilnCaseStudy />} />
-              <Route path="/project/sahaay" element={<SahaayCaseStudy />} />
-              <Route path="/project/subsense" element={<SubsenseWIP />} />
-              <Route path="/project/:slug" element={<CaseStudy />} />
+              <Route
+                path="*"
+                element={
+                  <section className="min-h-[60vh] flex flex-col items-center justify-center gap-4 px-6 text-center">
+                    <h1 className="text-3xl font-bold">Page not found</h1>
+                    <Link to="/" className="text-sm underline underline-offset-4 hover:text-[#FF3B30]">
+                      Return to homepage
+                    </Link>
+                  </section>
+                }
+              />
             </Routes>
           </AnimatePresence>
 
