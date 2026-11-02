@@ -1,22 +1,43 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;1,500;1,600;1,700&family=JetBrains+Mono:wght@400;500&family=Press+Start+2P&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Outfit", sans-serif;
+  --font-sans: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Inter", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-  --font-serif: "Instrument Serif", serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-pixel: "Press Start 2P", ui-monospace, monospace;
 
-  --color-bg: #F9F9F9;
-  --color-ink: #1A1A1B;
-  --color-accent: #FF3B3B;
+  --color-bg: #FFFFFF;
+  --color-ink: #000000;
+  --color-accent: #FF3B30;
   --color-tech: #00E5FF;
   --animate-flicker: flicker 0.15s infinite;
 }
 
+#portfolio-navigation,
+#portfolio-navigation a,
+#portfolio-navigation button,
+#mobile-navigation a,
+#mobile-navigation button {
+  color: #000;
+  filter: none;
+  mix-blend-mode: normal;
+}
+
+#portfolio-navigation {
+  color: #000;
+  mix-blend-mode: normal;
+}
+
+#portfolio-navigation .nav-logo-accent,
+#mobile-navigation .nav-logo-accent {
+  color: #FF3B30;
+}
+
 @layer base {
   body {
-    @apply bg-bg text-ink selection:bg-accent selection:text-white cursor-none;
+    @apply bg-bg text-ink selection:bg-accent selection:text-white;
     font-feature-settings: "ss01", "ss02", "cv01", "cv02";
   }
 
@@ -62,6 +83,15 @@ html.lenis, html.lenis body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #CBCBCB;
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 @keyframes flicker {

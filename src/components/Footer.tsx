@@ -48,7 +48,7 @@ export default function Footer() {
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              className="group relative w-24 h-24 rounded-full bg-accent flex items-center justify-center text-white cursor-none overflow-hidden border-none shadow-2xl flex-shrink-0"
+              className="group relative w-24 h-24 rounded-full bg-accent flex items-center justify-center text-white overflow-hidden border-none shadow-2xl flex-shrink-0 cursor-pointer"
               onMouseEnter={() => {
                 window.dispatchEvent(new CustomEvent('updateCursorText', { detail: { text: 'REBOOT' } }));
               }}
