@@ -15,22 +15,29 @@
   --animate-flicker: flicker 0.15s infinite;
 }
 
-#portfolio-navigation,
+/* NAV: transparent bar. Text colour follows the background under it (data-tone is set in Navigation.tsx) */
+#portfolio-navigation {
+  --nav-fg: #000;
+  background: transparent;
+  color: var(--nav-fg);
+}
+#portfolio-navigation[data-tone="dark"] {
+  --nav-fg: #fff;
+}
 #portfolio-navigation a,
-#portfolio-navigation button,
+#portfolio-navigation button {
+  color: var(--nav-fg);
+  transition: color 0.25s ease;
+}
+#portfolio-navigation .nav-logo-accent {
+  color: #FF3B30;
+}
+
+/* Mobile drawer keeps white background + black text */
 #mobile-navigation a,
 #mobile-navigation button {
   color: #000;
-  filter: none;
-  mix-blend-mode: normal;
 }
-
-#portfolio-navigation {
-  color: #000;
-  mix-blend-mode: normal;
-}
-
-#portfolio-navigation .nav-logo-accent,
 #mobile-navigation .nav-logo-accent {
   color: #FF3B30;
 }
