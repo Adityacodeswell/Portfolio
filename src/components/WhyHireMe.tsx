@@ -25,6 +25,61 @@ const seg = (p: number, a: number, b: number) => clamp((p - a) / (b - a));
 const smoother = (t: number) => t * t * t * (t * (t * 6 - 15) + 10);
 const cubicInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
+// ---------- 8-BIT SOUND (Web Audio, no files needed) ----------
+class RetroSound {
+  enabled = false;
+  private ctx: AudioContext | null = null;
+
+  private getCtx(): AudioContext | null {
+    if (typeof window === 'undefined') return null;
+    if (!this.ctx) {
+      const Ctor =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+      if (!Ctor) return null;
+      this.ctx = new Ctor();
+    }
+    if (this.ctx.state === 'suspended') void this.ctx.resume();
+    return this.ctx;
+  }
+
+  private tone(freq: number, delay: number, dur: number, type: OscillatorType, vol: number, slideTo?: number) {
+    const ctx = this.getCtx();
+    if (!ctx) return;
+    const t = ctx.currentTime + delay;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, t);
+    if (slideTo) osc.frequency.exponentialRampToValueAtTime(slideTo, t + dur);
+    gain.gain.setValueAtTime(vol, t);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(t);
+    osc.stop(t + dur + 0.02);
+  }
+
+  hover() {
+    if (this.enabled) this.tone(920, 0, 0.04, 'sine', 0.04);
+  }
+  click() {
+    if (this.enabled) this.tone(660, 0, 0.09, 'square', 0.1, 220);
+  }
+  select(index: number) {
+    if (!this.enabled) return;
+    const base = [330, 392, 494, 587][index] ?? 330;
+    this.tone(base, 0, 0.07, 'square', 0.12);
+    this.tone(base * 1.5, 0.06, 0.09, 'square', 0.12);
+    this.tone(base * 2, 0.12, 0.12, 'square', 0.1);
+  }
+  powerOn() {
+    if (!this.enabled) return;
+    [330, 440, 554.37, 659.25, 880].forEach((f, i) => this.tone(f, i * 0.05, 0.12, 'square', 0.14));
+  }
+}
+const sound = new RetroSound();
+
 export default function WhyHireMe({ id = 'why-hire-me' }: { id?: string }) {
   const seqRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -35,6 +90,23 @@ export default function WhyHireMe({ id = 'why-hire-me' }: { id?: string }) {
   const skillsRef = useRef<HTMLDivElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
+  const [sfx, setSfx] = useState(false);
+  const prevActive = useRef(0);
+
+  const toggleSfx = () => {
+    const next = !sfx;
+    sound.enabled = next;
+    setSfx(next);
+    if (next) sound.powerOn();
+  };
+
+  // play the selection jingle whenever the scroll moves to a new menu item
+  useEffect(() => {
+    if (prevActive.current !== active) {
+      prevActive.current = active;
+      sound.select(active);
+    }
+  }, [active]);
 
   // ---------- PART A: phone scroll ----------
   useEffect(() => {
@@ -163,7 +235,7 @@ export default function WhyHireMe({ id = 'why-hire-me' }: { id?: string }) {
           <div ref={wrapRef} className="whm-wrap">
             <div className="whm-tabs">
               {SKILLS.map((s, i) => (
-                <button key={s.label} type="button" aria-label={s.label} className={`whm-tab ${i === active ? 'on' : ''}`} onClick={() => go(i)}>
+                <button key={s.label} type="button" aria-label={s.label} className={`whm-tab ${i === active ? 'on' : ''}`} onMouseEnter={() => sound.hover()} onClick={() => { if (i === active) sound.click(); go(i); }}>
                   <svg viewBox="0 0 16 16" aria-hidden="true"><path d={s.icon} /></svg>
                 </button>
               ))}
@@ -172,11 +244,23 @@ export default function WhyHireMe({ id = 'why-hire-me' }: { id?: string }) {
 
             <div className="whm-screen">
               <i className="whm-corner tl" /><i className="whm-corner tr" /><i className="whm-corner bl" /><i className="whm-corner br" />
-              <header className="whm-sh"><h3>PLAYER CAN</h3><div className="whm-dither" /></header>
+              <header className="whm-sh">
+  <h3>PLAYER CAN</h3>
+  <div className="whm-dither" />
+  <button
+    type="button"
+    className="whm-sfx"
+    onClick={toggleSfx}
+    aria-pressed={sfx}
+    aria-label={sfx ? 'Turn sound off' : 'Turn sound on'}
+  >
+    {sfx ? 'SFX ON' : 'SFX OFF'}
+  </button>
+</header>
               <div className="whm-cn">
                 <div className="whm-ml">
                   {SKILLS.map((s, i) => (
-                    <button key={s.label} type="button" className={`whm-mi ${i === active ? 'on' : ''}`} aria-current={i === active} onClick={() => go(i)}>
+                    <button key={s.label} type="button" className={`whm-mi ${i === active ? 'on' : ''}`} aria-current={i === active} onMouseEnter={() => sound.hover()} onClick={() => { if (i === active) sound.click(); go(i); }}>
                       {s.label}
                     </button>
                   ))}
@@ -213,8 +297,8 @@ const CSS = `
 .whm-dev{position:absolute;left:50%;top:50%}
 .whm-dev img{display:block;width:100%;height:100%;max-width:none;user-select:none;-webkit-user-drag:none;pointer-events:none}
 .whm-veil{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:3}
-.whm-intro{background:#fff;color:#000;padding:clamp(28px,5vh,64px) clamp(24px,8vw,128px) clamp(64px,9vh,112px)}
-.whm-intro h2{max-width:1200px;margin:0 auto;font-family:var(--font-display,sans-serif);font-size:clamp(2rem,4.8vw,5rem);font-weight:800;line-height:1;letter-spacing:-.06em;color:#000}
+.whm-intro{background:#000;color:#fff;padding:clamp(48px,8vh,96px) clamp(24px,8vw,128px) clamp(40px,6vh,72px)}
+.whm-intro h2{max-width:1200px;margin:0 auto;font-family:var(--font-display,sans-serif);font-size:clamp(2rem,4.8vw,5rem);font-weight:800;line-height:1;letter-spacing:-.06em;color:#fff}
 .whm-intro h2 span{color:#ff3b30}
 
 .whm-skills{--sr:#ff1f2a;position:relative;height:calc(100svh + 280vh);background:#000;color:var(--sr);font-family:'Press Start 2P',ui-monospace,monospace}
@@ -235,8 +319,8 @@ const CSS = `
 .whm-sh h3{margin:0;font-size:clamp(14px,3.6vw,30px);font-weight:400;letter-spacing:-.06em;white-space:nowrap;position:relative;z-index:1}
 .whm-dither{position:absolute;right:15px;top:0;width:145px;height:100%;opacity:.75;background-image:radial-gradient(#000 2px,transparent 2px);background-size:9px 9px;-webkit-mask-image:linear-gradient(90deg,transparent,#000);mask-image:linear-gradient(90deg,transparent,#000)}
 .whm-cn{display:grid;grid-template-columns:43% 57%;min-height:310px;position:relative;z-index:1}
-.whm-ml{border-right:5px solid #4a0d12;padding:4px 15px 0 0;display:flex;flex-direction:column;justify-content:space-evenly}
-.whm-mi{font-size:clamp(11px,1.8vw,18px);text-align:left;opacity:.5;padding:8px 9px;border:4px solid transparent;margin-left:-5px}
+.whm-ml{border-right:5px solid #4a0d12;padding:4px 15px 0 24px;display:flex;flex-direction:column;justify-content:space-evenly;gap:6px}
+.whm-mi{font-size:clamp(11px,1.8vw,18px);text-align:left;opacity:.5;padding:10px 12px;border:4px solid transparent;margin-left:0;transition:opacity .15s}
 .whm-mi.on{opacity:1;border-color:var(--sr)}
 .whm-dt{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:0 14px;min-width:0}
 .whm-art{position:relative;width:min(100%,300px);height:230px}
@@ -260,9 +344,12 @@ const CSS = `
  .whm-brand{font-size:7px}.whm-pin{padding:20px 14px}.whm-tabs{height:59px;padding-left:22px;gap:3px}
  .whm-tab{width:clamp(48px,13vw,76px);height:51px;border-width:3px}.whm-tab.on{height:61px}.whm-tab svg{width:26px;height:26px}
  .whm-screen{box-sizing:border-box;width:100%;padding:13px 14px 18px;min-height:390px;border-width:5px}.whm-sh{height:56px;margin-bottom:12px;padding:0 12px}
- .whm-cn{grid-template-columns:minmax(0,39%) minmax(0,61%);min-height:270px}.whm-ml{min-width:0;padding-right:8px;border-right-width:3px}
- .whm-mi{max-width:100%;white-space:nowrap;font-size:clamp(6px,2.2vw,11px);padding:12px 3px;border-width:3px;margin-left:-3px}
+ .whm-cn{grid-template-columns:minmax(0,39%) minmax(0,61%);min-height:270px}.whm-ml{min-width:0;padding:2px 8px 0 14px;border-right-width:3px;gap:2px}
+ .whm-mi{max-width:100%;min-height:44px;white-space:nowrap;font-size:clamp(6px,2.1vw,10px);padding:10px 6px;border-width:3px;margin-left:0}
  .whm-dt{padding:0 2px;overflow:hidden}.whm-art{width:100%;height:clamp(130px,42vw,180px)}.whm-cap,.whm-cp{font-size:6px}.whm-bat{width:min(190px,calc(100vw - 96px));height:58px}.whm-bat:after{top:11px;height:24px}
 }
+.whm-skills .whm-sfx{position:absolute;right:14px;top:50%;transform:translateY(-50%);z-index:2;background:#000;color:var(--sr);border:3px solid #000;padding:7px 9px;font-size:8px;letter-spacing:.06em;white-space:nowrap}
+.whm-skills .whm-sfx:hover{background:#1c0406}
+@media(max-width:650px){.whm-skills .whm-sfx{right:8px;padding:6px;font-size:6px}}
 @media(prefers-reduced-motion:reduce){.whm-art img.on{animation:none}.whm-tab,.whm-bat:before{transition:none}}
 `;

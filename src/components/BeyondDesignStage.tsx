@@ -871,7 +871,17 @@ export default function BeyondDesignStage() {
         />
 
         {/* Top HUD Row */}
-        <div className="flex items-center justify-between w-full pointer-events-auto pt-2 px-2 md:px-6">
+        <div className="relative flex items-center justify-between w-full pointer-events-auto pt-2 px-2 md:px-6">
+          {/* Centered section heading */}
+          <h2
+            className="absolute left-1/2 top-2 -translate-x-1/2 pointer-events-none text-center font-pixel text-white whitespace-nowrap tracking-wider drop-shadow-[3px_3px_0_#000000]"
+            style={{ fontSize: 'clamp(10px, 2.6vw, 26px)' }}
+          >
+            INTERESTS
+            <span className="hidden sm:block mt-2 text-[8px] md:text-[10px] tracking-[0.2em] text-white/80 drop-shadow-[2px_2px_0_#000000]">
+              TAP A CHARACTER
+            </span>
+          </h2>
           {/* Top-Left: 3 Pixel-Art Hearts */}
           <div
             className="flex items-center gap-2"
